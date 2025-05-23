@@ -22,6 +22,91 @@
 
   ;; (setq package-enable-at-startup nil)  ;; disable package.el in favor of elpaca
 #+END_SRC
+** Fonts
+#+BEGIN_SRC emacs-lisp
+  ;; fontaine
+  (use-package fontaine
+    :ensure t
+    :init
+    ;; Copy of https://protesilaos.com/emacs/fontaine default
+    (setq fontaine-presets
+  	'((small
+
+  	   ;; Aporetic requires install of the below
+  	   ;; <https://github.com/protesilaos/aporetic>.
+
+  	   :default-family "Aporetic Serif Mono"
+  	   :default-height 100
+  	   :variable-pitch-family "Aporetic Sans")
+  	  (regular) ; like this it uses all the fallback values and is named `regular'
+  	  (medium
+  	   :default-weight semilight
+  	   :default-height 150
+  	   :bold-weight extrabold)
+  	  (large
+  	   :inherit medium
+  	   :default-height 180)
+  	  (presentation
+  	   :default-height 180)
+  	  (t
+  	   ;; I keep all properties for didactic purposes, but most can be
+  	   ;; omitted.  See the fontaine manual for the technicalities:
+  	   ;; <https://protesilaos.com/emacs/fontaine>.
+  	   :default-family "Aporetic Sans Mono"
+  	   :default-weight regular
+  	   :default-height 150
+
+             :fixed-pitch-family nil ; falls back to :default-family
+             :fixed-pitch-weight nil ; falls back to :default-weight
+             :fixed-pitch-height 1.0
+
+             :fixed-pitch-serif-family nil ; falls back to :default-family
+             :fixed-pitch-serif-weight nil ; falls back to :default-weight
+             :fixed-pitch-serif-height 1.0
+
+             :variable-pitch-family "Aporetic Serif"
+             :variable-pitch-weight nil
+             :variable-pitch-height 1.0
+
+             :mode-line-active-family nil ; falls back to :default-family
+             :mode-line-active-weight nil ; falls back to :default-weight
+             :mode-line-active-height 0.9
+
+             :mode-line-inactive-family nil ; falls back to :default-family
+             :mode-line-inactive-weight nil ; falls back to :default-weight
+             :mode-line-inactive-height 0.9
+
+             :header-line-family nil ; falls back to :default-family
+             :header-line-weight nil ; falls back to :default-weight
+             :header-line-height 0.9
+
+             :line-number-family nil ; falls back to :default-family
+             :line-number-weight nil ; falls back to :default-weight
+             :line-number-height 0.9
+
+             :tab-bar-family nil ; falls back to :default-family
+             :tab-bar-weight nil ; falls back to :default-weight
+             :tab-bar-height 1.0
+
+             :tab-line-family nil ; falls back to :default-family
+             :tab-line-weight nil ; falls back to :default-weight
+             :tab-line-height 1.0
+
+             :bold-family nil ; use whatever the underlying face has
+             :bold-weight bold
+
+             :italic-family nil
+             :italic-slant italic
+
+             :line-spacing nil)))
+
+    :config
+    (fontaine-mode 1)
+    :hook (emacs-startup . (lambda () (fontaine-set-preset 'regular)))
+    ;;(fontaine-set-preset 'regular)
+    )
+
+#+END_SRC
 * Evil
 ** Base Install
 #+BEGIN_SRC emacs-lisp
@@ -69,7 +154,7 @@
   ;; Improve cursor visibility
   (use-package beacon
     :ensure t
-    :init
+    :config
     (beacon-mode 1))
 #+END_SRC
 * ORG
@@ -84,6 +169,8 @@
 #+BEGIN_SRC emacs-lisp
   (use-package org-roam
     :ensure t
+    :init
+    (setq org-roam-directory (file-truename "C:\\Users\\Deron\\notes"))
     )
 #+END_SRC
 * HELM
@@ -107,6 +194,8 @@
     :ensure t
     :init
     (setq magit-section-disable-line-numbers nil)
+    :config
+    (org-roam-db-autosync-mode)
     )
 #+end_src
 * Python
