@@ -21,16 +21,37 @@
   ;; (setq package-enable-at-startup nil)  ;; disable package.el in favor of elpaca
 #+END_SRC
 * Evil
-** Setup
+** Base Install
 #+BEGIN_SRC emacs-lisp
   ;; download/install evil mode
-  (unless (package-installed-p 'evil)
-    (package-install 'evil))
+
+  ;; Manual install
+  ;; (unless (package-installed-p 'evil)
+  ;;   (package-install 'evil))
 
   ;; enable Evil
-  (setq evil-want-C-i-jump nil)  ;; Fix org-mode Tab
-  (require 'evil)
-  (evil-mode 1)
+  ;; (setq evil-want-C-i-jump nil)  ;; Fix org-mode Tab
+  ;; (require 'evil)
+  ;; (evil-mode 1)
+
+  ;; use-package
+  (use-package evil
+    :ensure t
+    :init
+    (setq evil-want-integration t) ;; optional since defaulted true
+    (setq evil-want-keybinding nil)
+    :config
+    (evil-mode 1))
+#+END_SRC
+** Evil Collection
+#+BEGIN_SRC emacs-lisp
+  ;; Evil Collection
+  ;; Default bindings to evil mode
+  (use-package evil-collection
+    :after evil
+    :ensure t
+    :config
+    (evil-collection-init))
 #+END_SRC
 * Misc Packages 
 ** which-key
@@ -69,6 +90,14 @@
      ("C-x C-b" . 'helm-buffers-list))
     )
 
+#+end_src
+* Magit
+** Install
+#+begin_src emacs-lisp
+  ;; install magit
+  (use-package magit
+    :ensure t
+    )
 #+end_src
 * Python
 ** tmp
