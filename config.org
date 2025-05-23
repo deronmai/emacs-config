@@ -1,0 +1,78 @@
+#+TITLE: Emacs config
+
+* Basic Settings
+** Defaults
+#+BEGIN_SRC emacs-lisp
+  (setq scroll-conservatively 100)  ;; scroll line by line
+
+  ;; autosave
+  ;; (setq make-backup-file nil)
+  ;; (setq auto-save-default nil)
+
+  (when window-system (global-hl-line-mode t))          ;; easy cursor
+  (when window-system (global-prettify-symbols-mode t)) ;; lambda etc looks nice
+
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+
+  (setq inhibit-startup-message t)
+
+  ;; (setq package-enable-at-startup nil)  ;; disable package.el in favor of elpaca
+#+END_SRC
+* Evil
+** Setup
+#+BEGIN_SRC emacs-lisp
+  ;; download/install evil mode
+  (unless (package-installed-p 'evil)
+    (package-install 'evil))
+
+  ;; enable Evil
+  (setq evil-want-C-i-jump nil)  ;; Fix org-mode Tab
+  (require 'evil)
+  (evil-mode 1)
+#+END_SRC
+* Misc Packages 
+** which-key
+#+BEGIN_SRC emacs-lisp
+  ;; Improve key-binding help
+  (use-package which-key
+    :ensure t
+    :init
+    (which-key-mode))
+#+END_SRC
+** beacon
+#+BEGIN_SRC emacs-lisp
+  ;; Improve cursor visibility
+  (use-package beacon
+    :ensure t
+    :init
+    (beacon-mode 1))
+#+END_SRC
+* ORG
+** Pretty bullets
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+#+END_SRC
+* HELM
+** Install
+#+begin_src emacs-lisp
+  ;; install helm
+  (use-package helm
+    :ensure t
+    :bind
+    (("M-x"     . 'helm-M-x)
+     ("C-x C-f" . 'helm-find-files)
+     ("C-x C-b" . 'helm-buffers-list))
+    )
+
+#+end_src
+* Python
+** tmp
+#+begin_src emacs-lisp
+  (setq python-shell-interpreter "C:\\Users\\Deron\\AppData\\Local\\Programs\\Python\\Python313\\python.exe")
+
+#+end_src
