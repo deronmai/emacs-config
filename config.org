@@ -16,6 +16,8 @@
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
 
+  (global-display-line-numbers-mode)  ;; Use hooks for specific modes later
+
   (setq inhibit-startup-message t)
 
   ;; (setq package-enable-at-startup nil)  ;; disable package.el in favor of elpaca
@@ -78,6 +80,12 @@
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+END_SRC
+** Org Roam
+#+BEGIN_SRC emacs-lisp
+  (use-package org-roam
+    :ensure t
+    )
+#+END_SRC
 * HELM
 ** Install
 #+begin_src emacs-lisp
@@ -97,6 +105,8 @@
   ;; install magit
   (use-package magit
     :ensure t
+    :init
+    (setq magit-section-disable-line-numbers nil)
     )
 #+end_src
 * Python
