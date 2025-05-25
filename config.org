@@ -163,7 +163,10 @@
   (use-package org-bullets
     :ensure t
     :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+    (add-hook 'org-mode-hook (lambda ()
+  			     (org-bullets-mode)
+  			     (visual-line-mode)
+  			     (org-indent-mode))))
 #+END_SRC
 ** Org Roam
 #+BEGIN_SRC emacs-lisp
@@ -172,6 +175,21 @@
     :init
     (setq org-roam-directory (file-truename "C:\\Users\\Deron\\notes"))
     )
+#+END_SRC
+* LaTeX
+** auctex
+#+BEGIN_SRC emacs-lisp
+  (use-package auctex
+    :ensure t
+    :config
+    (setq TeX-auto-save t)
+    (setq TeX-parse-self t)
+    (setq-default TeX-master nil))
+#+END_SRC
+** preview-latex
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package preview-latex
+  ;;   :ensure t)
 #+END_SRC
 * HELM
 ** Install
