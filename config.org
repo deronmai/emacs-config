@@ -10,7 +10,7 @@
   ;; (setq auto-save-default nil)
 
   (when window-system (global-hl-line-mode t))          ;; easy cursor
-  (when window-system (global-prettify-symbols-mode t)) ;; lambda etc looks nice
+  (when window-system (global-prettify-symbols-mode t)) ;; lambda etc looks nice (should turn this off for certain modes like python in the future)
 
   (tool-bar-mode -1)
   (menu-bar-mode -1)
@@ -218,8 +218,17 @@
     )
 #+end_src
 * Python
-** tmp
+** Set Variables
 #+begin_src emacs-lisp
   (setq python-shell-interpreter "C:\\Users\\Deron\\AppData\\Local\\Programs\\Python\\Python313\\python.exe")
 
 #+end_src
+* AI
+** gptel
+#+BEGIN_SRC emacs-lisp
+  (use-package gptel
+    :ensure t
+    :config
+    ;; key in ~/.authinfo
+    (setq gptel-api-key-from-auth-source t))
+#+END_SRC
