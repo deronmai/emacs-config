@@ -1,4 +1,4 @@
-+Title: emacs-config
+#+Title: emacs-config
 * Introduction
 This is my personal setup for emacs. At a high level, it is separated into the sourced file (.emacs) and the actual configuration config.org which is rendered into elisp.
 
