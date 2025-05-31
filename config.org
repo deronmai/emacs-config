@@ -173,7 +173,13 @@
   (use-package org-roam
     :ensure t
     :init
-    (setq org-roam-directory (file-truename "C:\\Users\\Deron\\notes"))
+    ;; Set different directories for Windows vs Mac
+    (setq org-roam-directory
+          (cond
+           ((eq system-type 'windows-nt)
+            (file-truename "C:\\Users\\Deron\\notes"))
+           ((eq system-type 'darwin)
+            (file-truename "/Users/deron.mai/notes"))))
     )
 #+END_SRC
 * LaTeX
