@@ -205,7 +205,7 @@
 
 #+end_src
 * Development
-This section is generally for usability and dev tooling enhancements. Language specific packages are under the Code Section
+This section is generally for usability and dev tooling enhancements. Language specific packages are under the Coding Languages Section
 ** LSP
 *** eglot
 #+BEGIN_SRC emacs-lisp
@@ -251,7 +251,7 @@ LSP for python. Note that pyright must be installed for the system as well.
     :hook (magit-mode . (lambda () (display-line-numbers-mode -1)))
     )
 #+end_src
-* Code
+* Coding Lanuages
 ** Python
 Python must also be installed on the system
 *** Set Variables
