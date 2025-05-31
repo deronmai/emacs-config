@@ -204,7 +204,8 @@
     )
 
 #+end_src
-* Coding
+* Development
+This section is generally for usability and dev tooling enhancements. Language specific packages are under the Code Section
 ** LSP
 *** eglot
 #+BEGIN_SRC emacs-lisp
@@ -237,19 +238,6 @@ LSP for python. Note that pyright must be installed for the system as well.
   (use-package tree-sitter-langs
     :ensure t)
 #+END_SRC
-** Languages
-*** Python
-Python must also be installed on the system
-**** Set Variables
-#+BEGIN_SRC emacs-lisp
-  ;; Should move this to an environment variable
-  (setq python-shell-interpreter "C:\\Users\\Deron\\AppData\\Local\\Programs\\Python\\Python313\\python.exe")
-
-#+END_SRC
-**** Tree-sitter Python Grammar
-#+BEGIN_SRC bash
-  pip install tree-sitter
-#+END_SRC
 ** Magit
 *** Install
 #+begin_src emacs-lisp
@@ -263,6 +251,19 @@ Python must also be installed on the system
     :hook (magit-mode . (lambda () (display-line-numbers-mode -1)))
     )
 #+end_src
+* Code
+** Python
+Python must also be installed on the system
+*** Set Variables
+#+BEGIN_SRC emacs-lisp
+  ;; Should move this to an environment variable
+  (setq python-shell-interpreter "C:\\Users\\Deron\\AppData\\Local\\Programs\\Python\\Python313\\python.exe")
+
+#+END_SRC
+*** Tree-sitter Python Grammar
+#+BEGIN_SRC bash
+  pip install tree-sitter
+#+END_SRC
 * AI
 ** gptel
 #+BEGIN_SRC emacs-lisp
