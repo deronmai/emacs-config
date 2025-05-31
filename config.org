@@ -242,6 +242,7 @@ LSP for python. Note that pyright must be installed for the system as well.
 Python must also be installed on the system
 **** Set Variables
 #+BEGIN_SRC emacs-lisp
+  ;; Should move this to an environment variable
   (setq python-shell-interpreter "C:\\Users\\Deron\\AppData\\Local\\Programs\\Python\\Python313\\python.exe")
 
 #+END_SRC

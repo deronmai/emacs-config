@@ -28,8 +28,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(spacemacs-dark))
  '(custom-safe-themes
-   '("7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf"
-     default))
+   '("7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf" default))
  '(helm-minibuffer-history-key "M-p")
  '(package-selected-packages nil))
 (custom-set-faces
