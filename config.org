@@ -140,6 +140,17 @@
     :config
     (evil-collection-init))
 #+END_SRC
+* Terminal
+** Mac (non-windows)
+Use vterm for mac. It is not supported in windows
+#+BEGIN_SRC emacs-lisp
+  (when (not (eq system-type 'windows-nt))
+    (setq exec-path (append exec-path '("/Users/deron.mai/bin/CMake.app/Contents/bin")))
+    ;; This assumes manual build of vterm
+    ;; https://github.com/akermu/emacs-libvterm/tree/master
+    (use-package vterm
+      :load-path "/Users/deron.mai/emacs-libvterm/"))
+#+END_SRC
 * Misc Packages 
 ** which-key
 #+BEGIN_SRC emacs-lisp
