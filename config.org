@@ -250,10 +250,14 @@ LSP for python. Note that pyright must be installed for the system as well.
 ** Tree-sitter
 *** installation
 #+BEGIN_SRC emacs-lisp
-  (use-package tree-sitter
-    :ensure t)
-  (use-package tree-sitter-langs
-    :ensure t)
+  ;; already included in emacs 29+
+  ;; (use-package tree-sitter
+  ;;  :ensure t
+  ;;  :config
+  ;;  (add-to-list 'tree-sitter-load-path "/Users/deron.mai/tree-sitter-rust/build/lib")
+  ;;  )
+  ;; (use-package tree-sitter-langs
+  ;;  :ensure t)
 #+END_SRC
 ** Magit
 *** Install
@@ -280,6 +284,27 @@ Python must also be installed on the system
 *** Tree-sitter Python Grammar
 #+BEGIN_SRC bash
   pip install tree-sitter
+#+END_SRC
+** Rust
+Require https://github.com/rust-lang/rust-analyzer installed
+*** Rustic
+#+BEGIN_SRC emacs-lisp
+  (use-package rustic
+    :ensure t
+    :config
+    (setq rustic-format-on-save nil)
+    :custom
+    (rustic-cargo-use-last-stored-arguments t))
+#+END_SRC
+*** Tree-sitter rust recipe
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'treesit-language-source-alist
+   '(rust "https://github.com/tree-sitter/tree-sitter-rust.git" "v0.23.3"))
+  ;; Install with treesit-install-language-grammar command (should make function for this in future)
+  ;; source: https://archive.casouri.cc/note/2023/tree-sitter-in-emacs-29/index.html
+  (add-to-list 'major-mode-remap-alist
+  	     '(rust-mode . rust-ts-mode))
 #+END_SRC
 * AI
 ** gptel
