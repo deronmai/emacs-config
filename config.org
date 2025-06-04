@@ -27,6 +27,7 @@
   (global-display-line-numbers-mode)  ;; Use hooks for specific modes later
 
   (setq inhibit-startup-message t)
+  (setq vc-follow-symlinks t)
 
   ;; (setq package-enable-at-startup nil)  ;; disable package.el in favor of elpaca
 #+END_SRC
