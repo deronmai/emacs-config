@@ -238,7 +238,7 @@ This section is generally for usability and dev tooling enhancements. Language s
   ;; Not necessary for emacs 29+ since built-in, but added for backwards compatibility
   (use-package eglot
     :ensure t
-    :hook (python-mode . eglot-ensure))
+    :hook (python-ts-mode . eglot-ensure))
 #+END_SRC
 *** lsp-pyright
 LSP for python. Note that pyright must be installed for the system as well.
@@ -284,18 +284,33 @@ LSP for python. Note that pyright must be installed for the system as well.
 * Coding Lanuages
 ** Python
 Python must also be installed on the system
-*** Set Variables
+*** Python tree-sitter mode
 #+BEGIN_SRC emacs-lisp
-  ;; Should move this to an environment variable
-  (setq python-shell-interpreter "C:\\Users\\Deron\\AppData\\Local\\Programs\\Python\\Python313\\python.exe")
-
+  (add-to-list 'major-mode-remap-alist
+  	     '(python-mode . python-ts-mode))
 #+END_SRC
-*** Tree-sitter Python Grammar
-#+BEGIN_SRC bash
-  pip install tree-sitter
+***  Variables
+#+BEGIN_SRC emacs-lisp
+
+  ;; Set interpreter on windows (likely should update to use pyenv on windows in future)
+  (when (eq system-type 'windows-nt)
+    (setq python-shell-interpreter "C:\\Users\\Deron\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"))
+#+END_SRC
+*** Tree-sitter Grammar
+#+BEGIN_SRC emacs-lisp
+  ;; Install with treesit-install-language-grammar command (should make function for this in future)
+  ;; source: https://archive.casouri.cc/note/2023/tree-sitter-in-emacs-29/index.html
+  (add-to-list
+   'treesit-language-source-alist
+   '(python "https://github.com/tree-sitter/tree-sitter-python.git" "v0.23.3"))
 #+END_SRC
 ** Rust
 Require https://github.com/rust-lang/rust-analyzer installed
+*** Rust tree-sitter mode
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'major-mode-remap-alist
+  	     '(rust-mode . rust-ts-mode))
+#+END_SRC
 *** Rustic
 #+BEGIN_SRC emacs-lisp
   (use-package rustic
@@ -307,13 +322,11 @@ Require https://github.com/rust-lang/rust-analyzer installed
 #+END_SRC
 *** Tree-sitter rust recipe
 #+BEGIN_SRC emacs-lisp
+  ;; Install with treesit-install-language-grammar command (should make function for this in future)
+  ;; source: https://archive.casouri.cc/note/2023/tree-sitter-in-emacs-29/index.html
   (add-to-list
    'treesit-language-source-alist
    '(rust "https://github.com/tree-sitter/tree-sitter-rust.git" "v0.23.3"))
-  ;; Install with treesit-install-language-grammar command (should make function for this in future)
-  ;; source: https://archive.casouri.cc/note/2023/tree-sitter-in-emacs-29/index.html
-  (add-to-list 'major-mode-remap-alist
-  	     '(rust-mode . rust-ts-mode))
 #+END_SRC
 * AI
 ** gptel
