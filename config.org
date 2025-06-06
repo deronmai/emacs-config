@@ -296,8 +296,6 @@ LSP for python. Note that pyright must be installed for the system as well.
     :ensure t
     :init
     (setq magit-section-disable-line-numbers nil)
-    :config
-    (org-roam-db-autosync-mode)
     :hook (magit-mode . (lambda () (display-line-numbers-mode -1)))
     )
 #+end_src
@@ -337,8 +335,7 @@ Require https://github.com/rust-lang/rust-analyzer installed
     :ensure t
     :config
     (setq rustic-format-on-save nil)
-    :custom
-    (rustic-cargo-use-last-stored-arguments t))
+    )
 #+END_SRC
 *** Tree-sitter rust recipe
 #+BEGIN_SRC emacs-lisp
