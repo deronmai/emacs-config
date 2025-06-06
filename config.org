@@ -31,6 +31,24 @@
 
   ;; (setq package-enable-at-startup nil)  ;; disable package.el in favor of elpaca
 #+END_SRC
+** Custom vars
+Use custom variable /HOME/ to make moving between systems a bit more seamless.
+Between unix/linux systems, the home directories may change, but the relative paths will stay the same.
+Likewise, custom variable /EMACS_BUILDS/ will be used for local builds.
+#+BEGIN_SRC emacs-lisp
+  ;; Set home dir for linux and unix based systems
+  (when (not (eq system-type 'windows-nt))
+    ;; linux
+    (when (eq system-type 'gnu/linux)
+      (defconst HOME "/home/dmai" "The home directory for Linux.")
+      ;; EMACS_BUILDS=$HOME/repos/emacs for Linux
+      (defconst EMACS_BUILDS (concat HOME "/repos/emacs") "The emacs build directory for Linux."))
+    ;; Mac
+    (when (eq system-type 'darwin)
+      (defconst HOME "/Users/deron.mai" "The home directory for Mac.")
+      ;; EMACS_BUILDS=$HOME for Mac
+      (defconst EMACS_BUILDS HOME "The emacs build directory for Mac.")))
+#+END_SRC
 ** Fonts
 #+BEGIN_SRC emacs-lisp
   ;; fontaine
@@ -150,15 +168,18 @@
     (evil-collection-init))
 #+END_SRC
 * Terminal
-** Mac (non-windows)
-Use vterm for mac. It is not supported in windows
+** Vterm (unix only)
+Use vterm for Mac and Linux. It is not supported in windows
 #+BEGIN_SRC emacs-lisp
   (when (not (eq system-type 'windows-nt))
-    (setq exec-path (append exec-path '("/Users/deron.mai/bin/CMake.app/Contents/bin")))
-    ;; This assumes manual build of vterm
-    ;; https://github.com/akermu/emacs-libvterm/tree/master
-    (use-package vterm
-      :load-path "/Users/deron.mai/emacs-libvterm/"))
+    ;; Hack in Mac to get around lacking admin privileges to install cmake
+    (if (eq system-type 'darwin)
+        (setq exec-path (append exec-path '("/Users/deron.mai/bin/CMake.app/Contents/bin")))
+      ;; Normal install
+      ;; Manual build of vterm
+      ;; https://github.com/akermu/emacs-libvterm/tree/master
+      (use-package vterm
+        :load-path (lambda () (list (concat EMACS_BUILDS "/emacs-libvterm/"))))))
 #+END_SRC
 * Misc Packages 
 ** which-key
@@ -195,12 +216,11 @@ Use vterm for mac. It is not supported in windows
     :init
     ;; Set different directories for Windows vs Mac
     (setq org-roam-directory
-          (cond
-           ((eq system-type 'windows-nt)
-            (file-truename "C:\\Users\\Deron\\notes"))
-           ((eq system-type 'darwin)
-            (file-truename "/Users/deron.mai/notes"))))
-    )
+          (if (eq system-type 'windows-nt)  ;; Handle windows
+              (file-truename "C:\\Users\\Deron\\notes")
+  	  (file-truename (concat HOME "/notes"))))  ;; Handle Mac and linux
+    :config
+    (org-roam-db-autosync-mode))
 #+END_SRC
 * LaTeX
 ** auctex
