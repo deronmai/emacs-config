@@ -307,9 +307,8 @@ Python must also be installed on the system
   (add-to-list 'major-mode-remap-alist
   	     '(python-mode . python-ts-mode))
 #+END_SRC
-***  Variables
+*** Variables
 #+BEGIN_SRC emacs-lisp
-
   ;; Set interpreter on windows (likely should update to use pyenv on windows in future)
   (when (eq system-type 'windows-nt)
     (setq python-shell-interpreter "C:\\Users\\Deron\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"))
