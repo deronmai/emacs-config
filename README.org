@@ -1,9 +1,8 @@
 #+Title: emacs-config
 * Introduction
-This is my personal setup for emacs. At a high level, it is separated into the sourced file (.emacs) and the actual configuration config.org which is rendered into elisp.
-
-Currently, it is a large work in progress, but at a high level it is define by vim bindings (evil) and python based development
+This is my personal setup for emacs. At a high level, it is separated into the loaded sourced file [[file:.emacs][.emacs]] and the actual configuration [[config.org]] which is rendered into elisp.
+Currently, it is a large work in progress, but at a high level it is defined by vim bindings (evil) and development environments for python, rust, and C++ (tbd)
 ** Context
-Currently, I have emacs running in Windows (yes, gross), but the intent is to build config which will work seamlessly between linux and windows developer environments. Historically, I have used emacs server to run remotely on linux and then x11 or nomachine with emacsclient to connect and forward back to my local machine
+The config works for unix based machines but there is some support for Windows (yes, gross) with intent is to build config which will work seamlessly between linux and windows developer environments. Historically, I have used emacs server to run remotely on linux and then x11 or nomachine with emacsclient to connect and forward back to my local machine
 ** Current priorities
-Current priorities are creating development environments for python, Rust, and C++, specifically using tree-sitter
+Current priorities are creating development environments for python, Rust, and C++, specifically using tree-sitter and LSP
