@@ -253,28 +253,43 @@ Use vterm for Mac and Linux. It is not supported in windows
 * Development
 This section is generally for usability and dev tooling enhancements. Language specific packages are under the Coding Languages Section
 ** LSP
+*** flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t)
+#+END_SRC
+*** lsp
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-mode
+    :ensure t)
+#+END_SRC
 *** eglot
 #+BEGIN_SRC emacs-lisp
   ;; Not necessary for emacs 29+ since built-in, but added for backwards compatibility
   (use-package eglot
     :ensure t
-    :hook (python-ts-mode . eglot-ensure))
+    ;; :hook (python-base-mode . eglot-ensure)  ;; allow pet to start eglot
+    )
 #+END_SRC
 *** lsp-pyright
 LSP for python. Note that pyright must be installed for the system as well.
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-pyright
+    :after lsp-mode
     :ensure t
     :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
-    :hook (python-mode . (lambda ()
-                            (require 'lsp-pyright)
-                            (lsp))))  ; or lsp-deferred
+    ;; :hook (python-base-mode . (lambda ()
+    ;;                       		      (require 'lsp-pyright)
+    ;;                       		      ;; handle lsp in pet
+    ;;                       		      ;; (lsp)  ; or lsp-deferred
+    ;;                       		      )))
+    )
 #+END_SRC
 *** company
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :ensure t
-    :hook (python-mode . company-mode))
+    :hook (python-base-mode . company-mode))
 #+END_SRC
 ** Tree-sitter
 *** installation
@@ -287,6 +302,22 @@ LSP for python. Note that pyright must be installed for the system as well.
   ;;  )
   ;; (use-package tree-sitter-langs
   ;;  :ensure t)
+#+END_SRC
+** Environment
+*** direnv
+Support for direnv
+#+BEGIN_SRC emacs-lisp
+  ;; direnv
+  ;; no longer recommended for Pet
+  ;; (use-package direnv
+  ;; :ensure t)
+
+  ;; envrc
+  (use-package envrc
+    :ensure t
+    :config
+    (add-hook 'change-major-mode-after-body-hook 'envrc-mode)
+    :hook (after-init . envrc-global-mode))
 #+END_SRC
 ** Magit
 *** Install
@@ -320,6 +351,34 @@ Python must also be installed on the system
   (add-to-list
    'treesit-language-source-alist
    '(python "https://github.com/tree-sitter/tree-sitter-python.git" "v0.23.3"))
+#+END_SRC
+*** Virtual Environment Manager
+https://github.com/wyuenho/emacs-pet
+#+BEGIN_SRC emacs-lisp
+  (use-package pet
+    :after lsp-pyright
+    :ensure t
+    :config
+    (add-hook 'python-base-mode-hook
+              (lambda ()
+                (pet-mode -10)
+                (setq-local python-shell-interpreter (pet-executable-find "python")
+                            python-shell-virtualenv-root (pet-virtualenv-root))
+
+
+  	      (setq-local
+  	       lsp-pyright-locate-python python-shell-interpreter
+  	       lsp-pyright-python-executable-cmd python-shell-interpreter
+                 lsp-pyright-venv-path python-shell-virtualenv-root)
+
+                (pet-eglot-setup)
+                (eglot-ensure)
+
+                (pet-flycheck-setup)
+                (flycheck-mode)
+
+  	      (lsp-deferred)  ;; activate lsp last
+  	      )))
 #+END_SRC
 ** Rust
 Require https://github.com/rust-lang/rust-analyzer installed
